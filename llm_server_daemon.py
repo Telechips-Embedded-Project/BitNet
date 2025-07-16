@@ -53,6 +53,8 @@ def handle_client(conn, proc):
             response = "".join(output_lines)
             print(f"[BitNet Answer] : ", response)
             conn.sendall(response.encode())
+            in_output = False
+            break
     except Exception as e:
         print(f"[BitNet Daemon] Error: {e}", file=sys.stderr)
     finally:

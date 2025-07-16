@@ -36,7 +36,7 @@ def handle_client(conn, proc):
             in_output = False  
             json_started = False
       
-              # 파싱이 문제임. 다시 해보기
+              # 
             while True:
                   line = proc.stdout.readline()
                   if not line:
@@ -90,7 +90,7 @@ def main():
     try:
         while True:
             conn, _ = server.accept()
-            handle_client(conn, proc)
+        handle_client(conn, proc)
             #threading.Thread(target=handle_client, args=(conn, proc), daemon=True).start()
     except KeyboardInterrupt:
         print("[BitNet Daemon] Ended")
