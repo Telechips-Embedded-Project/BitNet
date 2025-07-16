@@ -32,7 +32,7 @@ def handle_client(conn, proc):
             in_output = False  
             json_started = False
       
-              # 파싱이 문제임. 다시 해보기
+              # 연속 질문 버퍼 해결하기
             while True:
                 line = proc.stdout.readline()
                 if not line:
