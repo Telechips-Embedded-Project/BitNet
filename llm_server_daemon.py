@@ -3,6 +3,7 @@ import socket
 import subprocess
 import threading
 import sys
+import io
 
 HOST = "127.0.0.1"
 PORT = 55555
@@ -23,42 +24,37 @@ def handle_client(conn, proc):
             prompt = conn.recv(65536).decode()
             if not prompt:
                 break
-                
-            # BitNet prompt write
             proc.stdin.write(prompt + "\n")
             proc.stdin.flush()
-            # BitNet prompt read
-            output_lines = []
+
+            buffer = io.StringIO()
             in_output = False  
-            json_started = False
-      
-              # 연속 질문 버퍼 해결하기
+
             while True:
                 line = proc.stdout.readline()
                 if not line:
                     break
-                
                 if not in_output:
                     if line.startswith("Output:"):
                         in_output = True
                         content = line[len("Output:"):].lstrip()
                         if content:
-                            output_lines.append(content)
+                            buffer.write(content)
                     continue
-                # BitNet End check
                 if line.strip() == "" or line.strip().endswith("\n"):
                     break
-                output_lines.append(line)
-                
-            response = "".join(output_lines)
-            print(f"[BitNet Answer] : ", response)
+                buffer.write(line)
+            
+            response = buffer.getvalue()
+            print(f"[BitNet Answer] : {response}")
             conn.sendall(response.encode())
             in_output = False
-            break
+            buffer.close()
     except Exception as e:
         print(f"[BitNet Daemon] Error: {e}", file=sys.stderr)
-    finally:
-        conn.close()
+    #finally:
+        #print("bitnet test")
+        #conn.close()
 
 def main():
     # Bitnet init booting
