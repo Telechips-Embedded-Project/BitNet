@@ -1,3 +1,21 @@
+# Server로 실행시키는 방법
+터미널 열고 실행
+```
+python3 run_inference_server.py \
+  -m models/BitNet-b1.58-2B-4T/ggml-model-i2_s.gguf \
+  -p "You are a helpful and concise AI assistant." \
+  -t 4 -c 256 --port 55555
+```
+다른 터미널 열어서 요청 (질문)
+```
+curl -X POST http://127.0.0.1:55555/completion   -H "Content-Type: application/json"   -d '{
+    "prompt": "Explain about Telechips Corporation in South Korea",
+    "n_predict": 26,
+    "temperature": 0.3
+}'
+```
+<br>
+
 # bitnet.cpp
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![version](https://img.shields.io/badge/version-1.0-blue)
