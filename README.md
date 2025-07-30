@@ -6,9 +6,10 @@ python3 run_inference_server.py \
   -p "You are a helpful and concise AI assistant." \
   -t 4 -c 256 --port 55555
 ```
-다른 터미널 열어서 요청 (질문)
+다른 터미널 열어서 요청(질문)
 ```
-curl -X POST http://127.0.0.1:55555/completion   -H "Content-Type: application/json"   -d '{
+curl -X POST http://127.0.0.1:55555/completion   -H "Content-Type: application/json"
+-d '{
     "prompt": "Explain about Telechips Corporation in South Korea",
     "n_predict": 26,
     "temperature": 0.3
